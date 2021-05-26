@@ -40,34 +40,8 @@
     
     <canvas id="myChart"></canvas>
   </div>
-  
-  <script>
-    const request = window.indexedDB.open("userInput", 1);
-
-    // Create schema
-    request.onupgradeneeded = event => {
-      const db = event.target.result;
-      
-      // Create object store w/keypath
-      const transactionStore = db.createObjectStore("userTransaction", {keyPath: "__id", autoIncrement: true});
-      // Creates incdexes.
-      transactionStore.createIndex("name", "name"); 
-      transactionStore.createIndex("value", "value");
-      transactionStore.createIndex("date", "date")
-    }
-
-    // Open a transaction
-    request.onsuccess = () => {
-      const db = request.result;
-      const transaction = db.transaction(["userTransaction"], "readwrite");
-      const userTransactionStore = transaction.objectStore("userTransaction");
-      const transactionName = userTransactionStore.index("name");
-      const transactionValue = userTransactionStore.index("value");
-      const transactionDate = userTransactionStore.index("date");  
-    };
-
-  </script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script src="db.js"></script>
   <script src="index.js"></script>
 </body>
 </html>
